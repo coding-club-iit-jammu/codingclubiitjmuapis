@@ -17,7 +17,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     reddit = praw.Reddit(client_id='xUYUZsnXrX-npw',
         client_secret=os.environ['reddit'],
         user_agent='disocrd-meme-bot')
-    memes_submissions = reddit.subreddit('ProgrammerHumor').new(limit = 10)
+    memes_submissions = reddit.subreddit('ProgrammerHumor').hot(limit = 10)
     post_to_pick = random.randint(0, 9)
     for i in range(0, 10):
         submission = next(x for x in memes_submissions if not x.stickied)
