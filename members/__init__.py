@@ -10,12 +10,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     mongodb = MongoClient(uri)
     apidb = mongodb["API"] 
     final_res = {}
-    users = apidb.current.find({},{'_id':0,'name':1,'entry':1, 'discord-id' : 1, 'username' : 1})
+    users = apidb.current.find({},{'_id':0,'name':1,'entry':1, 'discord-id' : 1, 'username' : 1, 'img' : 1})
     for user in users:
         tem = {
             'name' : user['name'],
             'discord-id' : user['discord-id'],
-            'username' : user['username']
+            'username' : user['username'],
+            'img' : user['img']
         }
         final_res[user['entry']] = tem
     return func.HttpResponse(json.dumps(final_res, sort_keys=True), mimetype="application/json")
