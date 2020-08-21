@@ -2,3 +2,4 @@ azure-functions
 requests
 praw
 pytz
+pymongo
