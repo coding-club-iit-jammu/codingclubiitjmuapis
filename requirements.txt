@@ -3,3 +3,4 @@ requests
 praw
 pytz
 pymongo
+azure-storage-blob
