@@ -16,19 +16,20 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     mongodb = MongoClient(uri)
     db = mongodb["CodingClub"] 
     final_res = {}
-    users = db.member.find({},{'_id':0,'name':1,'entry':1, 'discordid' : 1})
+    users = db.member.find({},{'_id':0,'name':1,'entry':1, 'discordid' : 1, 'rating':1})
     dbMap = {}
     for user in users:
         dbMap[user['discordid']] = {
             'name' : user['name'],
-            'entry' : user['entry']
+            'entry' : user['entry'],
+            'rating' : user['rating']
         }
     Token = os.getenv("BOT_TOKEN")
     headers = {"Authorization" : f"Bot {Token}"}
     guildMember = requests.get('https://discordapp.com/api/guilds/664156473944834079/members?limit=500', headers = headers)
     dic = []
     Verified = '740429875046776953'
-    Alumni = '746205417943728200'
+    Alumni = '779048768145457173'
     for i in guildMember.json():
         if('bot' in i['user'] and i['user']['bot']):
             continue
@@ -44,7 +45,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 'entry': dbMap[did]['entry'],
                 'discordid' : did,
                 'image': img_link,
-                'username' : f"{i['user']['username']}#{i['user']['discriminator']}"
+                'username' : f"{i['user']['username']}#{i['user']['discriminator']}",
+                'rating' : dbMap[did].get('rating',0)
             }
             dic.append(tem)
     dic.sort(key = lambda x: x['entry'])
