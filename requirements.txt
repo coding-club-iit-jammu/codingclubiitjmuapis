@@ -3,4 +3,5 @@ requests
 praw
 pytz
 pymongo
+dnspython
 azure-storage-blob
